@@ -21,7 +21,7 @@ PORT = ARGV[1] || "31438"
 connection = LibNeptune::new(HOST, PORT)
 
 puts "Connecting to 'repconn' service:"
-pp connection.send_recv(
+connection.send_recv(
   args: [
     # Service name
     { type: :string, value: 'unirep82' },
@@ -31,7 +31,7 @@ pp connection.send_recv(
   ],
 )
 
-pp connection.send_recv(
+connection.send_recv(
   args: [
     { type: :string, value: ":local:" },
 
@@ -58,7 +58,7 @@ DATA = "A" + # Length of the first string read from the string value
 
 DATA2 = "A" * 100
 
-pp connection.send_recv(
+connection.send_recv(
   args: [
     { type: :integer, value: 0x8c }, # RPC Command
     { type: :bytes, value: DATA },

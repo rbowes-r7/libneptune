@@ -26,7 +26,7 @@ connection = LibNeptune::new(HOST, PORT)
 # udcs /home/ron/unidata/unidata/bin/udapi_server * TCP/IP 0 3600
 # defcs /home/ron/unidata/unidata/bin/udapi_server * TCP/IP 0 3600
 # uddaps /home/ron/unidata/unidata/bin/udapi_server * TCP/IP 0 3600
-pp connection.send_recv(
+connection.send_recv(
   args: [
     # Service name
     { type: :string, value: 'udcs' },
@@ -38,7 +38,7 @@ pp connection.send_recv(
 
 
 # I think this is "login_as_user"
-pp connection.send_recv(
+connection.send_recv(
   args: [
     # comms_version (Used as an "encryption" key for the password)
     # Must be 2, 3, or 4

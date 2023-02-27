@@ -409,10 +409,18 @@ class LibNeptune
   end
 
   def send_recv(...)
+    puts "Request:"
+    pp(...)
+    puts
     packet = LibNeptune::build_packet(...)
     @s.write(packet)
 
-    return LibNeptune::recv_packet(@s)
+    response = LibNeptune::recv_packet(@s)
+    puts "Response:"
+    pp response
+    puts
+
+    return response
   end
 
   def close()

@@ -23,7 +23,7 @@ connection = LibNeptune::new(HOST, PORT)
 
 # Connect to the udadmin service
 puts "Connecting to 'udadmin' service:"
-pp connection.send_recv(
+connection.send_recv(
   args: [
     # Service name
     { type: :string, value: 'udadmin' },
