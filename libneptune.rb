@@ -408,17 +408,17 @@ class LibNeptune
     return LibNeptune::recv_packet(@s)
   end
 
-  def send_recv(...)
-    puts "Request:"
-    pp(...)
-    puts
-    packet = LibNeptune::build_packet(...)
+  def send_recv(**args)
+    $stderr.puts "Request:"
+    $stderr.puts(args.pretty_inspect)
+    $stderr.puts
+    packet = LibNeptune::build_packet(**args)
     @s.write(packet)
 
     response = LibNeptune::recv_packet(@s)
-    puts "Response:"
-    pp response
-    puts
+    $stderr.puts "Response:"
+    $stderr.puts response.pretty_inspect
+    $stderr.puts
 
     return response
   end

@@ -34,6 +34,7 @@ connection.send_recv(
   ],
 )
 
+puts "Authenticating"
 connection.send_recv(
   args: [
     # Message type
@@ -44,12 +45,13 @@ connection.send_recv(
     { type: :string, value: ':local:' },
 
     # Password (encoded by making each byte negative)
-    # I think if username is :local:, this is username:uid:gid (gid can't be 0)
+    # If username is :local:, this is local_username:uid:gid (gid can't be 0)
     { type: :string, value: 'root:0:123'.bytes.map { |b| (0x0FF & (~b)).chr }.join },
   ],
 )
 
-connection.send_recv(
+puts "Sending command: #{ COMMAND }"
+out = connection.send_recv(
   args: [
     # Message type
     { type: :integer, value: LibNeptune::MESSAGE_OSCOMMAND },
@@ -57,4 +59,9 @@ connection.send_recv(
   ],
 )
 
+if out[:args] && out[:args][1]
+  puts "Result: #{out[:args][1][:value] || 'n/a'}"
+else
+  puts "Something went wrong!"
+end
 connection.close()

